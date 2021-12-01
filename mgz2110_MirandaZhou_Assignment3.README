@@ -1,0 +1,42 @@
+How to run code: run mgz2110_MirandaZhou_Assignment3.py file. The best parameters and mean validation accuracy will be
+printed in the command window. (please disregard the warnings). I have used matlab for the preprocessing steps.
+The mask images I created from there needs to be in the same file as the corresponding regular *.nii. For example:
+data/sub-01/ses-retest/func/c6sub-01_ses-retest_task-fingerfootlips_bold.nii
+
+Since I deleted the data as per instructions, please help me move the 2 c6 files into their corresponding folders before
+running the .py file.
+
+For preprocessing, to obtain the masks, I followed the instructions from the previous HW. I then edited the job file to include c6 which
+represented the mask.
+
+Limitations: The model currently is only being trained and tested on the same set of images. It is likely not
+generalizable because there is not enough data. In addition, there can be more analysis done through spm12 before using
+SVM. The PCA also has many more possibilities for tuning, due to computing constraints, I have only tested a few
+different components, but being able to use higher components might improve the model's ability. Finally, the model is
+likely to overfit at the current stage. We can have other possibilities of models such as introducing CNN to have a
+more robust model with regularization to prevent overfitting.
+
+Results:
+ses-test:
+PCA mean = 0.8609
+non-PCA mean = 0.893
+
+ses-retest:
+PCA mean = 0.8819
+non-PCA mean = 0.893
+
+Best parameters: {'C': 0.0001, 'gamma': 1e-05, 'kernel': 'linear'}
+PCA components: 90
+Brain mask threshold did not have a big impact. A variety of values were similar so I chose 0.8 at the end.
+
+For both sets of data ses-test and ses-retest, the one without PCA performed better. For ses-retest, also performed
+better compared to the ses-test. These percentages represent the accuracy of the tests, which is corresponding to the
+label obtained from the .mat file. The SVM is matching the cleaned up brain image with a specific label. The model is
+x% accurate at doing that task.
+
+I believe the non-PCA works better because it contains more information that is lost during the PCA process. When I was
+testing different PCA components, higher PCA component values allowed me to have better accuracy. Thus, when the model
+was able to take in the full data as input, it was able to more accurately predict the labels.
+
+
+
